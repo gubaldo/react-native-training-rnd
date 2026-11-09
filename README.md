@@ -13,11 +13,11 @@ breakdown (EM, senior developer, junior/end-learner).
 
 ## What is in this repository
 
-| Path | What it holds |
-| --- | --- |
-| `modules/` | The ten stage folders (M01–M10), each with a brief and a write-up template |
-| `modules/m11-airlinebooker-capstone/` | The team capstone, with its own brief and write-up template |
-| `docs/` | The PRD, the Solution Design, and the Build-to-Teach framework this repo implements |
+| Path                                  | What it holds                                                                       |
+| ------------------------------------- | ----------------------------------------------------------------------------------- |
+| `modules/`                            | The ten stage folders (M01–M10), each with a brief and a write-up template          |
+| `modules/m11-airlinebooker-capstone/` | The team capstone, with its own brief and write-up template                         |
+| `docs/`                               | The PRD, the Solution Design, and the Build-to-Teach framework this repo implements |
 
 Each stage folder also gets a `tasks.md`, generated from its `brief.md` with `/trainee-task-planner`
 — an ordered checklist mirroring the brief. It isn't written by hand and isn't included until it's
@@ -68,30 +68,31 @@ Review happens at the end of every stage, not just at the end of the course — 
 
 ## What is in each stage folder
 
-| File | Who writes it | Purpose |
-| --- | --- | --- |
-| `brief.md` | Your trainer | Objective, scope, stack constraints, the deliverable, a lab, and a definition of done. No answers. Do not edit it. |
-| `write-up-template.md` | You | Blank at first; filled in as you build, not after. |
-| `tasks.md` | Generated from `brief.md` via `/trainee-task-planner` | An ordered checklist mirroring the brief. You tick the boxes; it holds no answers and no steps you weren't already told. |
+| File                   | Who writes it                                                      | Purpose                                                                                                                                                                        |
+| ---------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `brief.md`             | Your trainer                                                       | Objective, scope, stack constraints, the deliverable, a lab, and a definition of done. No answers. Do not edit it.                                                             |
+| `write-up-template.md` | You                                                                | Blank at first; filled in as you build, not after.                                                                                                                             |
+| `tasks.md`             | Generated from `brief.md` via `/trainee-task-planner`              | An ordered checklist mirroring the brief. You tick the boxes; it holds no answers and no steps you weren't already told.                                                       |
+| `guide.md`             | Generated from the brief, tasks, and write-up template via `/epav` | A complete step-by-step walkthrough: every command, expected result, verification, and failure path. A completion aid — it does not replace your write-up or `module_<NN>.md`. |
 
 Your React Native code lives outside this repository, in your own GitHub repo (set up in M01). Link
 it from the header of your write-up. The capstone folder has the same files, at team scope.
 
 ## Stages
 
-| Stage | Title | Week | Hours | Theme | Leaves behind |
-| --- | --- | --- | --- | --- | --- |
-| [M01](modules/m01-toolchain-hybrid-project-setup/brief.md) | Toolchain and Hybrid Project Setup | 1 | 4 | Native toolchain, the bare-workflow starter project | `PersonalProfileApp` skeleton |
-| [M02](modules/m02-community-modules-native-linking/brief.md) | Community Modules and Native Linking | 1 | 4 | Hand-linking native modules, a lock-in audit | Three linked modules + audit |
-| [M03](modules/m03-ios-android-project-internals/brief.md) | iOS and Android Project Basics | 1 | 5 | App identity, EAS build profiles | Dev/Staging/Prod EAS build profiles |
-| [M04](modules/m04-core-components-layout-navigation/brief.md) | Core Components, Layout and Navigation | 1 | 5 | Screens, navigation, accessibility | Profile, Edit Profile, Settings screens + the accessibility checklist (reused in M09, M11) |
-| [M05](modules/m05-dev-workflow-professional-structure/brief.md) | Dev Workflow and Professional Structure | 1 | 2 | Debug/build loop, project structure | Restructured app + storage service |
-| [M06](modules/m06-firebase-bare-project/brief.md) | Firebase on a Bare Project | 2 | 4 | Auth, Firestore, security rules | Auth'd `To-Do App` skeleton |
-| [M07](modules/m07-state-and-server-data/brief.md) | State and Server Data | 2 | 4 | Zustand, Context, TanStack Query, optimistic updates | To-do CRUD + service layer |
-| [M08](modules/m08-realtime-sync-offline/brief.md) | Real-Time Sync and Offline | 2 | 4 | Snapshot listeners, offline persistence | Synced, offline-safe to-do list |
-| [M09](modules/m09-professional-ui-core-components/brief.md) | Professional UI and Core Components | 2 | 4 | Paper UI, list performance, accessibility | Polished, perf-tuned to-do app |
-| [M10](modules/m10-push-notifications-fcm/brief.md) | Push Notifications with FCM | 2 | 4 | FCM, permissions, a local push-sending script | Push-enabled to-do app (handed off to M11) |
-| [M11](modules/m11-airlinebooker-capstone/brief.md) | AirlineBooker Pro (team capstone) | 3–4 | 40 | Team build, architecture, release with EAS | — (terminal stage) |
+| Stage                                                           | Title                                   | Week | Hours | Theme                                                | Leaves behind                                                                              |
+| --------------------------------------------------------------- | --------------------------------------- | ---- | ----- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [M01](modules/m01-toolchain-hybrid-project-setup/brief.md)      | Toolchain and Hybrid Project Setup      | 1    | 4     | Native toolchain, the bare-workflow starter project  | `PersonalProfileApp` skeleton                                                              |
+| [M02](modules/m02-community-modules-native-linking/brief.md)    | Community Modules and Native Linking    | 1    | 4     | Hand-linking native modules, a lock-in audit         | Three linked modules + audit                                                               |
+| [M03](modules/m03-ios-android-project-internals/brief.md)       | iOS and Android Project Basics          | 1    | 5     | App identity, EAS build profiles                     | Dev/Staging/Prod EAS build profiles                                                        |
+| [M04](modules/m04-core-components-layout-navigation/brief.md)   | Core Components, Layout and Navigation  | 1    | 5     | Screens, navigation, accessibility                   | Profile, Edit Profile, Settings screens + the accessibility checklist (reused in M09, M11) |
+| [M05](modules/m05-dev-workflow-professional-structure/brief.md) | Dev Workflow and Professional Structure | 1    | 2     | Debug/build loop, project structure                  | Restructured app + storage service                                                         |
+| [M06](modules/m06-firebase-bare-project/brief.md)               | Firebase on a Bare Project              | 2    | 4     | Auth, Firestore, security rules                      | Auth'd `To-Do App` skeleton                                                                |
+| [M07](modules/m07-state-and-server-data/brief.md)               | State and Server Data                   | 2    | 4     | Zustand, Context, TanStack Query, optimistic updates | To-do CRUD + service layer                                                                 |
+| [M08](modules/m08-realtime-sync-offline/brief.md)               | Real-Time Sync and Offline              | 2    | 4     | Snapshot listeners, offline persistence              | Synced, offline-safe to-do list                                                            |
+| [M09](modules/m09-professional-ui-core-components/brief.md)     | Professional UI and Core Components     | 2    | 4     | Paper UI, list performance, accessibility            | Polished, perf-tuned to-do app                                                             |
+| [M10](modules/m10-push-notifications-fcm/brief.md)              | Push Notifications with FCM             | 2    | 4     | FCM, permissions, a local push-sending script        | Push-enabled to-do app (handed off to M11)                                                 |
+| [M11](modules/m11-airlinebooker-capstone/brief.md)              | AirlineBooker Pro (team capstone)       | 3–4  | 40    | Team build, architecture, release with EAS           | — (terminal stage)                                                                         |
 
 Work the stages in order. Week 1 builds the Personal Profile App (M01–M05); Week 2 builds the
 Full-Stack To-Do App (M06–M10) on new Firebase/state/sync/UI/push foundations; Weeks 3–4 are the
