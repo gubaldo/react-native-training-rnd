@@ -131,3 +131,5 @@ program owner before the dates noted:
 - `docs/prd/react-native-bare-workflow-curriculum.md` — the source curriculum this design is built
   from.
 - `docs/build-to-teach-framework.md` — the mechanism behind brief → build → write-up → review.
+- `docs/module-guide-workflow.md` — how to run `/evaluate`, `/plan`, `/apply`, and `/validate`
+  against a module folder to produce `modules/<folder>/guide.md`.
