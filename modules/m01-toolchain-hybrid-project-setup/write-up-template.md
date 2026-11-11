@@ -27,9 +27,9 @@ Execute cd ios && pod install to setup iOS while for android, setup is already a
 
 ## Concepts worth explaining
 
-Pick 1-2 ideas — for example what Metro, Hermes and the native shell each do, or why the bare
-workflow commits `ios/` and `android/` even though EAS Build still does the actual building for you
-— Metro is the JavaScript bundler for React Native. It acts as a local development server that serves your bundled JavaScript code for your phone or simulator to fetch and execute.
+— Metro is the JavaScript bundler for React Native. It runs as a local development server that packages your code and assets, instantly streaming them to your phone or simulator whenever changes occur.
+
+- ios/ and android/ folder contain the native project required to wrap and execute the JavaScript code.
 
 ## What tripped me up
 
