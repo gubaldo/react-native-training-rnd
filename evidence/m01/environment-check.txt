@@ -1,0 +1,36 @@
+geremyubaldo@AOCSGOMDY663 ~ % xcodebuild -version
+node -v
+npm -v
+watchman --version
+pod --version
+java -version
+echo "$ANDROID_HOME"
+adb --version
+"$ANDROID_HOME/emulator/emulator" -list-avds
+gh auth status
+Xcode 27.2
+Build version 27B52
+v20.20.2
+10.8.2
+2026.10.26.00
+1.16.2
+openjdk version "21.0.7" 2025-04-15
+OpenJDK Runtime Environment (build 21.0.7+-13880790-b1038.58)
+OpenJDK 64-Bit Server VM (build 21.0.7+-13880790-b1038.58, mixed mode)
+/Users/geremyubaldo/Library/Android/sdk
+Android Debug Bridge version 1.0.41
+Version 36.0.0-13206524
+Installed as /Users/geremyubaldo/Library/Android/sdk/platform-tools/adb
+Running on Darwin 27.2.0 (arm64)
+Medium_Phone
+Medium_Phone_2
+Medium_Phone_3
+Medium_Phone_4
+Medium_Tablet
+github.com
+  ✓ Logged in to github.com account gubaldo (keyring)
+  - Active account: true
+  - Git operations protocol: https
+  - Token: gho_************************************
+  - Token scopes: 'gist', 'read:org', 'repo', 'workflow'
+geremyubaldo@AOCSGOMDY663 ~ % 

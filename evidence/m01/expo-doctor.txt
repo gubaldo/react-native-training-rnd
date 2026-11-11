@@ -1,0 +1,2 @@
+geremyubaldo@AOCSGOMDY663 PersonalProfileApp % npx expo-doctor
+20/20 checks passed. No issues detected!

@@ -1,7 +1,6 @@
 # M01 Write-Up — Toolchain and Hybrid Project Setup
 
-> Fill this in as you go. Write it so a trainee starting this stage next cohort could follow your
-> path on their own.
+Project Repository: https://github.com/gubaldo/PersonalProfileApp.git
 
 ## What I built
 
@@ -38,9 +37,8 @@ No version mismatches were encountered during the execution.
 
 ## Checkpoint evidence
 
-Show the fresh clone running on both platforms from the README alone, the clean `expo-doctor`
-output, and the three fixed faults.
+Go to evidence/m01 to see the screenshots and md files.
 
 ## What I'd do differently
 
-If you started this module over, what would you do differently?
+Nothing major to change. The module's step-by-step instructions provided a clear, reliable roadmap from setup to verification.
