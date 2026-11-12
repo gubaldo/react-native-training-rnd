@@ -194,9 +194,10 @@ The two commands that prove it are `pod install` on iOS and a Gradle configurati
 
 - **Assets** such as icon fonts. A `.ttf` is not code, so the module cannot be "linked" as a pod or
   Gradle project alone. iOS needs the font registered in `Info.plist` under **Fonts provided by
-  application** (`UIAppFonts`); Android needs the font copied into
-  `android/app/src/main/assets/fonts`, which `react-native-vector-icons` does with a Gradle script
-  you apply by hand.
+  application** (`UIAppFonts`); Android needs the font inside the APK's `assets/`, which
+  `react-native-vector-icons` arranges with a Gradle script you apply by hand. In v10.3.0 that script
+  copies the font into a build-generated folder and registers that folder as an assets source
+  directory; it does **not** write into `android/app/src/main/assets/`.
 - **Native config** such as permissions, URL schemes, or app identity. Some libraries ship an Expo
   config plugin for this; this course hand-manages committed native folders instead.
 
@@ -1033,7 +1034,8 @@ grep -n -A4 "fonts.gradle" android/app/build.gradle | tee evidence/m02/android-b
 
 #### Step 6.12 — Rebuild Android and confirm the font asset
 
-**Goal:** prove the Gradle script copied the font into the built app's assets.
+**Goal:** prove the Gradle script copied the font into the build output that gets packaged into the
+APK.
 
 **Where:** `~/Projects/PersonalProfileApp`.
 
@@ -1046,24 +1048,42 @@ npx expo run:android
 After the build finishes, in a second terminal:
 
 ```bash
-ls -l android/app/src/main/assets/fonts/Ionicons.ttf
+find android/app/build -path "*ReactNativeVectorIcons/fonts/Ionicons.ttf"
 ```
 
-**You should see:** the app launches on the emulator, and the font file exists in
-`android/app/src/main/assets/fonts/`.
+**You should see:** the app launches on the emulator, and `find` prints exactly one path, typically
+`android/app/build/intermediates/ReactNativeVectorIcons/fonts/Ionicons.ttf`. Any path under
+`android/app/build` that ends in `ReactNativeVectorIcons/fonts/Ionicons.ttf` is a pass.
 
-**Verify:** both are true. The asset path is the proof; the visual icon check is Step 6.17.
+**Do not check `android/app/src/main/assets/fonts/`.** That path is expected to be missing.
+`react-native-vector-icons` 10.3.0's `fonts.gradle` copies fonts into
+`android/app/build/intermediates/ReactNativeVectorIcons/fonts` and registers that folder as an assets
+source directory; it never writes to `src/main/assets`. The `src/main/assets/fonts` path appears in
+the RNVI README only for its *manual-integration* option, which this guide does not use.
+`[verify at cohort freeze]` if the cohort pins a different RNVI major.
+
+**Verify:** both are true — the emulator shows the app, and `find` printed a path. The strongest proof
+is still Step 6.17: the APK can only render the glyph if the font was packaged.
 
 **If it fails:**
 
-- `No such file or directory`: the Gradle script did not run. Re-check Step 6.11, then
+- `find` prints nothing: the Gradle script did not run. Re-check Step 6.11, then
   `(cd android && ./gradlew clean)`, then rebuild from the project root.
+- `find` prints nothing but Step 6.11's `grep` looked right: run the copy task on its own with
+  `(cd android && ./gradlew copyReactNativeVectorIconFonts)`, then repeat `find`. A Gradle error here
+  names the bad path from `iconFontsDir`.
 - Icons later show as crossed-out boxes: `rm -rf android/app/build`, `(cd android && ./gradlew clean)`,
   rebuild. This clears stale copied assets.
 - Gradle fails on the script syntax: confirm you appended to `android/app/build.gradle`, not
   `android/build.gradle`.
 
-**Capture:** the `ls -l` output and a screenshot of the launched app.
+**Capture:**
+
+```bash
+find android/app/build -path "*ReactNativeVectorIcons/fonts/Ionicons.ttf" | tee evidence/m02/android-font-asset.txt
+```
+
+plus a screenshot of the launched app.
 
 #### Step 6.13 — Commit the native linking changes
 
@@ -1099,7 +1119,7 @@ commit build output.
 > - [ ] `Ionicons.ttf` is listed under `UIAppFonts` in `ios/*/Info.plist`
 > - [ ] The built iOS app bundle contains `Ionicons.ttf`
 > - [ ] `android/app/build.gradle` applies `fonts.gradle` with `iconFontNames`
-> - [ ] `android/app/src/main/assets/fonts/Ionicons.ttf` exists after a build
+> - [ ] The build output contains `Ionicons.ttf` under `ReactNativeVectorIcons/fonts` (Step 6.12)
 > - [ ] The native changes are committed
 
 ### Phase C — Prove all three modules visibly
@@ -1697,12 +1717,13 @@ Pass conditions:
 plutil -p ios/*/Info.plist | grep -A3 UIAppFonts
 grep -c 'apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")' android/app/build.gradle
 grep -n "iconFontNames" android/app/build.gradle
-ls -l android/app/src/main/assets/fonts/Ionicons.ttf
+find android/app/build -path "*ReactNativeVectorIcons/fonts/Ionicons.ttf" | head -1
 find ios/build ~/Library/Developer/Xcode/DerivedData -path "*.app/Ionicons.ttf" 2>/dev/null | head -1
 ```
 
 Pass conditions: `UIAppFonts` lists `Ionicons.ttf`; `grep -c` prints `1` (applied exactly once);
-`iconFontNames` lists `Ionicons.ttf`; the Android asset exists; the iOS `find` returns one path.
+`iconFontNames` lists `Ionicons.ttf`; the Android `find` returns one path; the iOS `find` returns one
+path.
 
 **Visibly working (runtime proof):** launch each platform and confirm the four observations.
 
@@ -1791,7 +1812,7 @@ cohort collects evidence elsewhere). Capture as you go — reconstructing at the
 | 5 | Android autolinking proof | Step 6.6 `./gradlew projects` | `evidence/m02/gradle-projects.txt` |
 | 6 | iOS font registration | Step 6.9 `plutil -p` | `evidence/m02/ios-uiappfonts.txt` |
 | 7 | iOS font in the built bundle | Step 6.10 `find` output | `evidence/m02/ios-font-in-bundle.txt` |
-| 8 | Android font registration | Step 6.11 `grep` output | `evidence/m02/android-build-gradle-fonts.txt` |
+| 8 | Android font registration and copied asset | Steps 6.11–6.12 | `evidence/m02/android-build-gradle-fonts.txt`, `evidence/m02/android-font-asset.txt` |
 | 9 | npm metadata: AsyncStorage | Step 6.18 | `evidence/m02/npm-async-storage.txt` |
 | 10 | npm metadata: safe-area-context | Step 6.19 | `evidence/m02/npm-safe-area-context.txt` |
 | 11 | npm metadata: vector icons | Step 6.20 | `evidence/m02/npm-vector-icons.txt` |
