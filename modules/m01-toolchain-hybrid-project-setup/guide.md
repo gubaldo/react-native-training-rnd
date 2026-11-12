@@ -1082,7 +1082,8 @@ Because you have not installed `expo-dev-client` in this module, `npx expo start
 
 **You should see:** the Metro dev server start, a QR code and a key menu; the app loads in Expo Go.
 
-**Verify:** the app renders, and an edit to `App.tsx` hot-reloads.
+**Verify:** the app renders, and an edit to the root `App` component (`App.js` in the `bare-minimum`
+template, `App.tsx` in a TypeScript template) hot-reloads.
 
 **If it fails:** "Project is incompatible with Expo Go" means the store Expo Go does not match SDK 58
 — check its version. [verify at cohort freeze] You do not have native modules yet, so Expo Go should

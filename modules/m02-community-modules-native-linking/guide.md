@@ -1128,17 +1128,25 @@ The brief's definition of done says "visibly working on both platforms". That ne
 uses all three. You are not building the real profile screens yet (M04 does that); you are building a
 **probe** that proves the native wiring.
 
-#### Step 6.14 — Replace `App.tsx` with the probe
+#### Step 6.14 — Replace the root `App` component with the probe
 
 **Goal:** exercise safe-area insets, an icon glyph and AsyncStorage persistence in one screen.
 
 **Where:** `~/Projects/PersonalProfileApp`.
 
-**Run:** copy this whole block. It overwrites the template's `App.tsx`; Step 6.13 committed the
-previous state, so it is recoverable.
+**Run:** copy this whole block. It overwrites the template's root `App` component; Step 6.13 committed
+the previous state, so it is recoverable.
+
+Which file is that? The M01 default, `create-expo-app --template bare-minimum`, is a **JavaScript**
+template and ships **`App.js`**. A TypeScript template ships **`App.tsx`**. The probe below is plain
+JSX with no TypeScript syntax (no type annotations, generics or `as` casts), so it is valid in either
+file. The command picks the right one for you:
 
 ```bash
-cat > App.tsx <<'EOF'
+# App.js for the bare-minimum template; App.tsx for a TypeScript template.
+APP_ENTRY=App.tsx
+[ -f App.js ] && APP_ENTRY=App.js
+cat > "$APP_ENTRY" <<'EOF'
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -1259,19 +1267,20 @@ EOF
 **Verify:**
 
 ```bash
-npx tsc --noEmit
+if [ -f tsconfig.json ]; then npx tsc --noEmit; else echo "no tsconfig.json — skipping tsc (JavaScript template)"; fi
 ```
 
-prints nothing (or only pre-existing project errors). Metro will also show a red screen if the file
-does not compile.
+In a TypeScript template this prints nothing (or only pre-existing project errors). The
+`bare-minimum` template has no `tsconfig.json`, so the command says it is skipping the check — that is
+expected. On either template, Metro shows a red screen if the file does not compile.
 
 **If it fails:**
 
 - "Cannot find module 'react-native-vector-icons/Ionicons'": the package is not installed — repeat
   Step 6.3.
 - Type errors about `gap`: your React Native version is below the baseline — stop and re-check M01.
-- If `npx tsc` is not configured, rely on Metro's compile output; do not add TypeScript config in
-  this module.
+- No `tsconfig.json` (the `bare-minimum` template): expected — rely on Metro's compile output; do not
+  add TypeScript config in this module.
 
 **Capture:** the file content is your probe; no separate capture.
 
