@@ -1293,9 +1293,11 @@ build.
 npx expo run:ios
 ```
 
-**You should see:** the app launches, a blue person icon renders, the background is light red
-edge-to-edge, and the content sits clear of the notch and home indicator. The inset line shows
-non-zero `top` and `bottom` values.
+**You should see:** the app launches, a blue person icon renders, the background is a pale red
+(`#fee2e2`) edge-to-edge — including behind the status bar and the home indicator — and the content
+sits clear of the notch and home indicator. The inset line shows non-zero `top` and `bottom` values.
+`#fee2e2` is a very desaturated red, so on a bright simulator it can look close to white; compare a
+pixel against the hex before deciding the background is missing.
 
 **Verify:** all four observations hold. Save the screen:
 
@@ -1311,6 +1313,9 @@ xcrun simctl io booted screenshot evidence/m02/ios-probe.png
   from `react-native` instead of `react-native-safe-area-context`.
 - **Icon appears in Expo Go but not here:** expected — Expo Go bundles its own icon fonts. This is
   exactly why the proof is a dev build.
+- **Background looks white:** `#fee2e2` is very pale, so first check a pixel instead of trusting your
+  eyes. If it is genuinely white, confirm `App.js` (or `App.tsx`) holds the Step 6.14 probe and press
+  `r` in Metro — a stale bundle still shows the old template.
 - **Red screen about the glyph name:** use a valid Ionicons name (browse
   <https://oblador.github.io/react-native-vector-icons/>), then reload.
 
