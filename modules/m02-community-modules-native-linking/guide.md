@@ -1134,19 +1134,15 @@ uses all three. You are not building the real profile screens yet (M04 does that
 
 **Where:** `~/Projects/PersonalProfileApp`.
 
-**Run:** copy this whole block. It overwrites the template's root `App` component; Step 6.13 committed
-the previous state, so it is recoverable.
+**Run:** open the root `App` component in the project, select all of its contents, and replace them
+with the block below. Save the file. Step 6.13 committed the previous state, so it is recoverable.
 
 Which file is that? The M01 default, `create-expo-app --template bare-minimum`, is a **JavaScript**
-template and ships **`App.js`**. A TypeScript template ships **`App.tsx`**. The probe below is plain
-JSX with no TypeScript syntax (no type annotations, generics or `as` casts), so it is valid in either
-file. The command picks the right one for you:
+template and ships **`App.js`**. A TypeScript template ships **`App.tsx`**. The probe is plain JSX
+with no TypeScript syntax (no type annotations, generics or `as` casts), so it drops into either file
+unchanged. Find it with `ls App.*`; if that shows both, edit `App.js` and delete the stale `App.tsx`.
 
-```bash
-# App.js for the bare-minimum template; App.tsx for a TypeScript template.
-APP_ENTRY=App.tsx
-[ -f App.js ] && APP_ENTRY=App.js
-cat > "$APP_ENTRY" <<'EOF'
+```jsx
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -1259,20 +1255,20 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-EOF
 ```
 
-**You should see:** no output from `cat`.
+**You should see:** the file saves with no syntax errors, and Metro rebuilds the app.
 
 **Verify:**
 
 ```bash
-if [ -f tsconfig.json ]; then npx tsc --noEmit; else echo "no tsconfig.json — skipping tsc (JavaScript template)"; fi
+npx tsc --noEmit
 ```
 
-In a TypeScript template this prints nothing (or only pre-existing project errors). The
-`bare-minimum` template has no `tsconfig.json`, so the command says it is skipping the check — that is
-expected. On either template, Metro shows a red screen if the file does not compile.
+TypeScript template only: prints nothing (or only pre-existing project errors). The `bare-minimum`
+template has no `tsconfig.json` — skip this check and rely on Metro's compile output; do not add
+TypeScript config in this module. On either template, Metro shows a red screen if the file does not
+compile.
 
 **If it fails:**
 
@@ -1282,7 +1278,7 @@ expected. On either template, Metro shows a red screen if the file does not comp
 - No `tsconfig.json` (the `bare-minimum` template): expected — rely on Metro's compile output; do not
   add TypeScript config in this module.
 
-**Capture:** the file content is your probe; no separate capture.
+**Capture:** the saved `App.js` (or `App.tsx`) is your probe; no separate capture.
 
 #### Step 6.15 — Verify safe area and the icon on iOS
 
