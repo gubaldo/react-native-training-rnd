@@ -10,28 +10,35 @@ audit.
 
 ## Why it's built this way (key decisions)
 
-- For each of the three modules, what made you confident (or not) that it was safe to take on?
-- Where did autolinking need help, and what did you have to do by hand?
+- AsyncStorage is the key-value storage system for React Native
+- Vector icons is UI icons library
+- Safe-area context is essential for handling status bar, dynamic island and home indicator
+- Autolinking connects standard native code automatically, but for some, you still have to step in manually for extra setup like font files and special setup for Android or iOS configs.
 
 ## How to build it (teach it to the next trainee)
 
-Write a guide to linking a community native module by hand on both platforms, using one of your
-three modules as the worked example.
+Check the documentation of the dependencies or libraries.
+
+When installing:
+
+iOS: Run pod install in ios/, check \*.xcworkspace / Xcode build settings if needed, and do a clean native build.
+
+Android: Sync Gradle, check MainApplication / AndroidManifest.xml if manual wiring is needed, and run a fresh native build.
+
+Test both platforms to make sure everything works properly.
 
 ## Concepts worth explaining
 
-Pick 1-2 ideas — autolinking versus manual linking, or how to judge whether a dependency is safe to
-take on — and explain each in your own words.
+Autolinking automatically finds installed native packages and connects them to the iOS and Android projects when you build your app, so you don't have to edit native project files manually.
 
 ## What tripped me up
 
-Linking surprises, icon font registration gotchas, anything `expo-doctor` caught that you didn't
-expect.
+None
 
 ## Checkpoint evidence
 
-Show all three modules working on both platforms, and the completed lock-in audit.
+Go to evidence/m02 to see the screenshots, txt and md files.
 
 ## What I'd do differently
 
-If you started this module over, what would you do differently?
+Nothing major to change. The module's step-by-step instructions provided a clear, reliable roadmap from setup to verification.

@@ -1,0 +1,3 @@
+version = '5.11.1'
+time.modified = '2026-11-03T02:24:58.551Z'
+peerDependencies = { react: '*', 'react-native': '*' }

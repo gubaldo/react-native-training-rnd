@@ -1,0 +1,44 @@
+{
+  "CADisableMinimumFrameDurationOnPhone" => true
+  "CFBundleDevelopmentRegion" => "$(DEVELOPMENT_LANGUAGE)"
+  "CFBundleExecutable" => "$(EXECUTABLE_NAME)"
+  "CFBundleIdentifier" => "$(PRODUCT_BUNDLE_IDENTIFIER)"
+  "CFBundleInfoDictionaryVersion" => "6.0"
+  "CFBundleName" => "$(PRODUCT_NAME)"
+  "CFBundlePackageType" => "$(PRODUCT_BUNDLE_PACKAGE_TYPE)"
+  "CFBundleShortVersionString" => "1.0"
+  "CFBundleSignature" => "????"
+  "CFBundleVersion" => "1"
+  "LSMinimumSystemVersion" => "12.0"
+  "LSRequiresIPhoneOS" => true
+  "NSAppTransportSecurity" => {
+    "NSAllowsArbitraryLoads" => false
+    "NSAllowsLocalNetworking" => true
+  }
+  "RCTNewArchEnabled" => true
+  "UIAppFonts" => [
+    0 => "Ionicons.ttf"
+  ]
+  "UIApplicationSceneManifest" => {
+    "UIApplicationSupportsMultipleScenes" => false
+    "UISceneConfigurations" => {
+      "UIWindowSceneSessionRoleApplication" => [
+        0 => {
+          "UISceneConfigurationName" => "Default Configuration"
+          "UISceneDelegateClassName" => "$(PRODUCT_MODULE_NAME).SceneDelegate"
+        }
+      ]
+    }
+  }
+  "UILaunchStoryboardName" => "SplashScreen"
+  "UIRequiredDeviceCapabilities" => [
+    0 => "arm64"
+  ]
+  "UIStatusBarStyle" => "UIStatusBarStyleDefault"
+  "UISupportedInterfaceOrientations" => [
+    0 => "UIInterfaceOrientationPortrait"
+    1 => "UIInterfaceOrientationLandscapeLeft"
+    2 => "UIInterfaceOrientationLandscapeRight"
+  ]
+  "UIViewControllerBasedStatusBarAppearance" => true
+}

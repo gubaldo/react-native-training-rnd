@@ -1,0 +1,8 @@
+  - RNCAsyncStorage (2.2.0):
+  - RNVectorIcons (10.3.0):
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  RNCAsyncStorage:
+  RNVectorIcons:
+  RNCAsyncStorage: 9aad1f18e1b3d98690ae696b01bd984054108916
+  RNVectorIcons: 8e7890bf2ce85e41df79133e7778070c37dc8d70
