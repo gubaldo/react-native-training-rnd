@@ -382,7 +382,7 @@ requirement.
 
 #### Step 6.1 — Inspect the existing app config
 
-**Goal:** capture the current name, slug and identity values so the per-environment variants are
+**Goal:** capture the current name, slug, and base app identity so the per-environment variants are
 derived from the app you already have, not invented.
 
 **Where:** your profile app repo root.
@@ -393,16 +393,29 @@ derived from the app you already have, not invented.
 cat app.json
 ```
 
-**You should see:** JSON with `expo.name`, `expo.slug`, `expo.ios.bundleIdentifier` and
-`expo.android.package` (names may vary slightly by starter).
+**You should see:** JSON with at least `expo.name` and `expo.slug`. It may also include
+`expo.ios.bundleIdentifier` and `expo.android.package`, but some starters leave those identity
+fields out of the Expo config.
 
-**Verify:** write down the values of `name`, `slug`, `ios.bundleIdentifier` and `android.package` —
-you need them as placeholders in Step 6.3.
+**Verify:** write down `name` and `slug`. If `ios.bundleIdentifier` or `android.package` is present,
+write it down too. If either identity field is missing, get the base ID from the native folders:
+
+```bash
+grep -n "PRODUCT_BUNDLE_IDENTIFIER" ios/*.xcodeproj/project.pbxproj | head -n 1
+grep -n "applicationId" android/app/build.gradle | head -n 1
+```
+
+Choose one reverse-DNS value as your **base ID**. If iOS and Android already use the same value, use
+it. If they differ, note both and pick the one you want `app.config.js` to own as the base; Step 6.3
+uses that base ID for both platforms. You need `name`, `slug`, and the base ID in Step 6.3.
 
 **If it fails:** "No such file" for `app.json` but an `app.config.js` exists — read that instead and
-carry on. If neither exists, you are not in the M01/M02 project; return to Step 5.6.
+carry on. If neither config file exists, you are not in the M01/M02 project; return to Step 5.6. If
+the identity fields are missing from config and the grep commands return nothing, confirm you are in
+the profile app repo root and that `ios/` and `android/` are present.
 
-**Capture:** the four values in `notes/m03-research.md`.
+**Capture:** the `name`, `slug`, base ID, and where you found the base ID in
+`notes/m03-research.md`.
 
 #### Step 6.2 — Create three distinct icon assets
 
@@ -462,13 +475,13 @@ scheme by environment — the core of "app identity through `app.config.js`".
 **Where:** your profile app repo root.
 
 **Run:** first substitute the three placeholders with the values you recorded in Step 6.1:
-`<your-app-json-slug>` (the `slug`), `<your-app-json-bundle-identifier>` (the `ios.bundleIdentifier`,
-also used to derive the Android package) and `<your-app-json-name>` (the `name`).
+`<your-app-json-slug>` (the `slug`), `<your-base-app-id>` (the base ID from `app.json`/`app.config.js`
+or the native fallback) and `<your-app-json-name>` (the `name`).
 
 ```bash
 cat > app.config.js <<'EOF'
 const SLUG = '<your-app-json-slug>';
-const BASE_ID = '<your-app-json-bundle-identifier>';
+const BASE_ID = '<your-base-app-id>';
 const APP_NAME = '<your-app-json-name>';
 
 const VARIANTS = {
@@ -786,7 +799,7 @@ verify the package is the base ID with no suffix.
 **Run:**
 
 ```bash
-adb shell pm list packages | grep '<your-app-json-bundle-identifier>'
+adb shell pm list packages | grep '<your-base-app-id>'
 ```
 
 **You should see:** three package lines — one ending in `.dev`, one in `.staging`, and one with no
@@ -938,7 +951,7 @@ stays flagged `[confirm with trainer]`.
 **Run:**
 
 ```bash
-adb shell pm list packages | grep '<your-app-json-bundle-identifier>'
+adb shell pm list packages | grep '<your-base-app-id>'
 ```
 
 **Pass condition:** three packages ending `.dev`, `.staging` and with no suffix; the device home
